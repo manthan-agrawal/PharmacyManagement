@@ -1,0 +1,8 @@
+medicine quantity
+user login
+updating medicine data
+bill generation
+updating user data according to points on purchase.
+Alternative to medicines.
+Stock checking <=5 and reordering the medicine.
+

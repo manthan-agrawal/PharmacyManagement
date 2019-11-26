@@ -128,7 +128,6 @@ public class login extends javax.swing.JFrame {
             String password = rs.getString("password");            
             if(username.equals(enteredUsername) && password.equals(enteredPassword)){
                 JOptionPane.showMessageDialog(login.this, "Welcome to the world of pharmacy");
-                pflpass.grabFocus();
                 rs.close();
                 ps.close();
                 obj.closeConnection();                
@@ -136,7 +135,7 @@ public class login extends javax.swing.JFrame {
             }
             else{
                 JOptionPane.showMessageDialog(login.this, "Enter the correct username and password");
-                pflpass.grabFocus();
+                txtflname.grabFocus();
                 rs.close();
                 ps.close();
                 obj.closeConnection();                

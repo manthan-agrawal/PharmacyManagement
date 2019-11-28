@@ -1,7 +1,7 @@
 Save button of bill.
 
 
-
+Add search with beginning
 Database editing
 Expired medicine
 Billing

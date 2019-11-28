@@ -116,9 +116,19 @@ public class home extends javax.swing.JFrame {
         getContentPane().add(btnAddMeicine, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 140, 20));
 
         AddDoctor.setText("Add Doctor");
+        AddDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddDoctorActionPerformed(evt);
+            }
+        });
         getContentPane().add(AddDoctor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 140, 20));
 
         AddCompany.setText("Add Company");
+        AddCompany.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddCompanyActionPerformed(evt);
+            }
+        });
         getContentPane().add(AddCompany, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 140, 20));
 
         btnGenerateBill.setText("Generate Bill");
@@ -156,6 +166,18 @@ public class home extends javax.swing.JFrame {
         bill.createTable("");
         bill.setVisible(true);
     }//GEN-LAST:event_btnGenerateBillActionPerformed
+
+    private void AddDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddDoctorActionPerformed
+        // TODO add your handling code here:
+        AddDoctor addDoctor = new AddDoctor();
+        addDoctor.setVisible(true);
+    }//GEN-LAST:event_AddDoctorActionPerformed
+
+    private void AddCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCompanyActionPerformed
+        // TODO add your handling code here:
+        AddCompany addCompany = new AddCompany();
+        addCompany.setVisible(true);
+    }//GEN-LAST:event_AddCompanyActionPerformed
 
     public static void main(String args[]) {
         

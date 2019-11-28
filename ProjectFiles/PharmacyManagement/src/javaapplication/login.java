@@ -31,6 +31,11 @@ public class login extends javax.swing.JFrame {
         jLabel2.setText("Password");
 
         jButton1.setText("Log in");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -128,8 +133,9 @@ public class login extends javax.swing.JFrame {
             String password = rs.getString("password");            
             if(username.equals(enteredUsername) && password.equals(enteredPassword)){
                 home home = new home();
-                home.tableInsert();
+                home.tableInsert("");
                 home.setVisible(true);
+                setVisible(false);
                 rs.close();
                 ps.close();
                 obj.closeConnection();                
@@ -159,6 +165,10 @@ public class login extends javax.swing.JFrame {
     private void pflpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pflpassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pflpassActionPerformed
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseExited
 
     /**
      * @param args the command line arguments

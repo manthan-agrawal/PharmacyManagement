@@ -17,8 +17,8 @@ public class home extends javax.swing.JFrame {
     }
     
     void tableInsert(String searchName){
-        dbconnect obj;
         String sql = "";
+        dbconnect obj;
         obj = new dbconnect();
         obj.createConnection();
         if(searchName.isEmpty())

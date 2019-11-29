@@ -33,9 +33,8 @@ public class AddDoctor extends javax.swing.JFrame {
         address = new javax.swing.JTextField();
         mobile1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        Clear = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("Registration No.");
 
@@ -100,14 +99,12 @@ public class AddDoctor extends javax.swing.JFrame {
             }
         });
 
-        Clear.setText("Clear");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,9 +126,7 @@ public class AddDoctor extends javax.swing.JFrame {
                             .addComponent(reg, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Clear)))
+                        .addComponent(jButton1)))
                 .addContainerGap(157, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -168,9 +163,7 @@ public class AddDoctor extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(mobile1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(Clear))
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -235,6 +228,13 @@ public class AddDoctor extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null,e);
         }
+        reg.setText("");
+        name.setText("");
+        type.setText("");
+        degree.setText("");
+        hospital_name.setText("");
+        address.setText("");
+        mobile1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -280,7 +280,6 @@ public class AddDoctor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Clear;
     private javax.swing.JTextField address;
     private javax.swing.JTextField degree;
     private javax.swing.JTextField hospital_name;

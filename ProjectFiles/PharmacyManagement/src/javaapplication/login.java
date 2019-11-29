@@ -132,7 +132,7 @@ public class login extends javax.swing.JFrame {
             String username = rs.getString("name");     
             String password = rs.getString("password");            
             if(username.equals(enteredUsername) && password.equals(enteredPassword)){
-                home home = new home();
+                home home = new home(username);
                 home.tableInsert("");
                 home.setVisible(true);
                 setVisible(false);

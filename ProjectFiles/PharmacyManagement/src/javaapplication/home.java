@@ -1,4 +1,5 @@
 package javaapplication;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,11 +10,33 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class home extends javax.swing.JFrame {
-
+    String user;
+    String bill_no;
     DefaultTableModel model;
-    public home() {
+    
+    public home(String username) {
         initComponents(); 
         model = (DefaultTableModel) tbldata.getModel();
+        user =username;
+        
+        dbconnect obj;
+        obj = new dbconnect();
+        obj.createConnection();
+        String sql= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
+        Statement ps;
+        try {
+            ps = obj.con.createStatement();
+            ResultSet rs= ps.executeQuery(sql);            
+            rs.next();
+            bill_no = rs.getString("MAX(`bill no.`)");
+            bill_no = String.valueOf(Integer.parseInt(bill_no)+1);
+            rs.close();
+            ps.close();                
+        }catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        obj.closeConnection();
+        
     }
     
     void tableInsert(String searchName){
@@ -25,7 +48,6 @@ public class home extends javax.swing.JFrame {
             sql= "SELECT * FROM medicine LIMIT 15;";
         else{ 
             sql= ("SELECT * FROM medicine where name = '"+searchName+"' LIMIT 15;");
-            System.out.println(sql);
         }
         Statement ps;
         try {
@@ -58,6 +80,7 @@ public class home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbldata = new javax.swing.JTable();
         btnsearch = new javax.swing.JButton();
@@ -71,6 +94,7 @@ public class home extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Home");
 
         tbldata.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,6 +165,16 @@ public class home extends javax.swing.JFrame {
         });
 
         txtQunatity.setText("Quantity");
+        txtQunatity.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtQunatityMouseClicked(evt);
+            }
+        });
+        txtQunatity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQunatityActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("MODIY DATABSE:");
@@ -221,7 +255,7 @@ public class home extends javax.swing.JFrame {
 
     private void btnGenerateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateBillActionPerformed
         // TODO add your handling code here:
-        bill bill = new bill();
+        bill bill = new bill(bill_no);
         bill.createTable("");
         bill.setVisible(true);
     }//GEN-LAST:event_btnGenerateBillActionPerformed
@@ -240,7 +274,67 @@ public class home extends javax.swing.JFrame {
 
     private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
         // TODO add your handling code here:
+        int row;String billNumberCheck;
+        row = tbldata.getSelectedRow();
+        String med_name = tbldata.getModel().getValueAt(row, 0).toString();
+
+        dbconnect obj;
+        obj = new dbconnect();
+        obj.createConnection();
+        
+        try{
+            
+            String sql2= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
+            Statement ps;
+            ps = obj.con.createStatement();
+            ResultSet rs= ps.executeQuery(sql2);            
+            rs.next();
+            billNumberCheck = rs.getString("MAX(`bill no.`)");
+            rs.close();
+            ps.close();                    
+            System.out.println(billNumberCheck);
+            System.out.println(bill_no);
+            
+            
+            if(!billNumberCheck.equals(bill_no)){
+                String sql1= ("insert into bill values (?, ?, ?, ?)");
+                PreparedStatement pstmt1  = obj.con.prepareStatement(sql1);
+                pstmt1.setString(1, bill_no);
+                pstmt1.setInt(2, 0);
+                pstmt1.setInt(3, 0);
+                pstmt1.setInt(4, 0);          
+                pstmt1.executeUpdate();
+                System.out.println("hellllllll");
+            }       
+            
+            
+            String sql= ("insert into user_has_medicine values (?, ?, ?, ?)");
+            PreparedStatement pstmt  = obj.con.prepareStatement(sql);
+            pstmt.setString(1, user);
+            pstmt.setString(2, med_name);
+            pstmt.setString(3, bill_no);
+            pstmt.setInt(4, Integer.parseInt(txtQunatity.getText()));          
+            pstmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Insertion Successful");
+            txtQunatity.setText("");            
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,e);
+        }        
+        obj.closeConnection();
+        
     }//GEN-LAST:event_btnCartActionPerformed
+
+    private void txtQunatityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQunatityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQunatityActionPerformed
+
+    private void txtQunatityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQunatityMouseClicked
+        // TODO add your handling code here:
+        
+        txtQunatity.setText("");
+    }//GEN-LAST:event_txtQunatityMouseClicked
 
     public static void main(String args[]) {
         
@@ -261,11 +355,11 @@ public class home extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new home().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new home().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -276,6 +370,7 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JButton btnGenerateBill;
     private javax.swing.JButton btnsearch;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbldata;
     private javax.swing.JTextField txtQunatity;

@@ -1,10 +1,9 @@
 Manthan notes-
 Save button of bill.
+prssing X should delete elements of the cart
 
 Add search with beginning
 Database editing
-Expired medicine
-Billing
 Daily stock report
 CART banai hai
 

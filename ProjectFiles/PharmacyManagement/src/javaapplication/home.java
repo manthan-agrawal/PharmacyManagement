@@ -38,6 +38,10 @@ public class home extends javax.swing.JFrame {
         obj.closeConnection();
         
     }
+
+    private home() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     void tableInsert(String searchName){
         String sql = "";
@@ -255,9 +259,11 @@ public class home extends javax.swing.JFrame {
 
     private void btnGenerateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateBillActionPerformed
         // TODO add your handling code here:
-        bill bill = new bill(bill_no);
+        bill bill = new bill(bill_no,user);
         bill.createTable("");
         bill.setVisible(true);
+       dispose();
+       
     }//GEN-LAST:event_btnGenerateBillActionPerformed
 
     private void AddDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddDoctorActionPerformed
@@ -274,14 +280,15 @@ public class home extends javax.swing.JFrame {
 
     private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
         // TODO add your handling code here:
-        int row;String billNumberCheck;
+        int row;
+        String billNumberCheck;
         row = tbldata.getSelectedRow();
         String med_name = tbldata.getModel().getValueAt(row, 0).toString();
 
         dbconnect obj;
         obj = new dbconnect();
         obj.createConnection();
-        
+                     
         try{
             
             String sql2= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
@@ -304,7 +311,6 @@ public class home extends javax.swing.JFrame {
                 pstmt1.setInt(3, 0);
                 pstmt1.setInt(4, 0);          
                 pstmt1.executeUpdate();
-                System.out.println("hellllllll");
             }       
             
             

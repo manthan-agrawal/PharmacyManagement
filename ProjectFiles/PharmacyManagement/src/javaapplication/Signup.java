@@ -123,7 +123,12 @@ public class Signup extends javax.swing.JFrame {
         });
         getContentPane().add(regtext, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 299, 96, -1));
 
-        roletext.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "[--Select--]", "admin", "pharmacist" }));
+        roletext.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "[--Select--]", "pharmacist", "admin" }));
+        roletext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roletextActionPerformed(evt);
+            }
+        });
         getContentPane().add(roletext, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 270, -1, -1));
 
         pack();
@@ -222,6 +227,10 @@ public class Signup extends javax.swing.JFrame {
         // TODO add your handling code here:
         regtext.setText("");
     }//GEN-LAST:event_regtextMouseClicked
+
+    private void roletextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roletextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roletextActionPerformed
 
     /**
      * @param args the command line arguments

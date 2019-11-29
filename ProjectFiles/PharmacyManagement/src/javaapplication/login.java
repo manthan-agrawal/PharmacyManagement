@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static org.eclipse.persistence.platform.database.oracle.plsql.OraclePLSQLTypes.Int;
 
 public class login extends javax.swing.JFrame {
 
@@ -22,6 +23,8 @@ public class login extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         pflpass = new javax.swing.JPasswordField();
+        loginAsbox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login and Sign up");
@@ -55,41 +58,61 @@ public class login extends javax.swing.JFrame {
             }
         });
 
+        loginAsbox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "[--select--]", "pharmacist", "admin" }));
+        loginAsbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginAsboxActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Login as:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(60, 60, 60)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
                         .addComponent(jButton2))
-                    .addComponent(txtflname, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                    .addComponent(pflpass))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pflpass, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel3))
+                            .addGap(66, 66, 66)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtflname, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(loginAsbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(590, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(74, 74, 74)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtflname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(pflpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(47, Short.MAX_VALUE))
+                    .addComponent(loginAsbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pflpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap(188, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,6 +123,8 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String enteredUsername = txtflname.getText().trim();
         String enteredPassword = pflpass.getText().trim();
+        int loginAs =  loginAsbox.getSelectedIndex();
+        
         if (enteredUsername.isEmpty())
         {
             if (enteredPassword.isEmpty())
@@ -119,6 +144,12 @@ public class login extends javax.swing.JFrame {
             pflpass.grabFocus();
             return;
         }
+         if(loginAs ==0)
+        {
+            JOptionPane.showMessageDialog(login.this, "please select any option from drop menu!");
+
+        }
+         
         
         dbconnect obj;
         obj = new dbconnect();
@@ -130,8 +161,9 @@ public class login extends javax.swing.JFrame {
             ResultSet rs= ps.executeQuery(sql);            
             rs.next();
             String username = rs.getString("name");     
-            String password = rs.getString("password");            
-            if(username.equals(enteredUsername) && password.equals(enteredPassword)){
+            String password = rs.getString("password");     
+            int role  = rs.getInt("role");
+            if(username.equals(enteredUsername) && password.equals(enteredPassword) && role==loginAs){
                 home home = new home();
                 home.tableInsert("");
                 home.setVisible(true);
@@ -142,7 +174,7 @@ public class login extends javax.swing.JFrame {
                 return;
             }
             else{
-                JOptionPane.showMessageDialog(login.this, "Enter the correct username and password");
+                JOptionPane.showMessageDialog(login.this, "Enter the correct username and password and select appropriate role");
                 txtflname.grabFocus();
                 rs.close();
                 ps.close();
@@ -169,6 +201,10 @@ public class login extends javax.swing.JFrame {
     private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseExited
+
+    private void loginAsboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginAsboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginAsboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,6 +238,8 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JComboBox loginAsbox;
     private javax.swing.JPasswordField pflpass;
     private javax.swing.JTextField txtflname;
     // End of variables declaration//GEN-END:variables

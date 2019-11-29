@@ -1,5 +1,5 @@
+Manthan notes-
 Save button of bill.
-
 
 Add search with beginning
 Database editing
@@ -7,3 +7,10 @@ Expired medicine
 Billing
 Daily stock report
 CART banai hai
+
+Pratik notes--
+Medicine band kar rahe toh sab band ho jara
+Exception 
+drop down 
+interface nice
+

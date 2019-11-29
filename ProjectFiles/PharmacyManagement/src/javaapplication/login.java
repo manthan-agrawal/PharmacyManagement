@@ -161,10 +161,16 @@ public class login extends javax.swing.JFrame {
             ResultSet rs= ps.executeQuery(sql);            
             rs.next();
             String username = rs.getString("name");     
+<<<<<<< HEAD
             String password = rs.getString("password");     
             int role  = rs.getInt("role");
             if(username.equals(enteredUsername) && password.equals(enteredPassword) && role==loginAs){
                 home home = new home();
+=======
+            String password = rs.getString("password");            
+            if(username.equals(enteredUsername) && password.equals(enteredPassword)){
+                home home = new home(username);
+>>>>>>> d76d990ee9ee554736e07c90d169150f1ef52473
                 home.tableInsert("");
                 home.setVisible(true);
                 setVisible(false);

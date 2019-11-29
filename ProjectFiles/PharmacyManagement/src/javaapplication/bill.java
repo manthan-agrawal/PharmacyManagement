@@ -8,9 +8,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class bill extends javax.swing.JFrame {
     DefaultTableModel model;    
-    public bill() {
+    String bill_number;
+    public bill(String bill_no) {
         initComponents();
         model = (DefaultTableModel) tbldata.getModel();
+        bill_number = bill_no;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -151,7 +153,7 @@ public class bill extends javax.swing.JFrame {
         obj.createConnection();
         sql= "select medicine_name,quantitiy,price from  user_has_medicine\n" +
                 "full  join medicine on medicine_name = medicine.name\n" +
-                "where `Bill_bill no.` =2;";
+                "where `Bill_bill no.` ="+bill_number+";";
 
         Statement ps;
         try {
@@ -216,11 +218,11 @@ public class bill extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new bill().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new bill().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

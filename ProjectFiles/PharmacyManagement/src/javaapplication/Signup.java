@@ -42,12 +42,10 @@ public class Signup extends javax.swing.JFrame {
         jPasswordField2 = new javax.swing.JPasswordField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        nametext = new javax.swing.JTextField();
         mobtext = new javax.swing.JTextField();
         emailtext = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -56,7 +54,7 @@ public class Signup extends javax.swing.JFrame {
 
         jLabel6.setText("jLabel6");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sign Up page");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -102,9 +100,6 @@ public class Signup extends javax.swing.JFrame {
         jLabel4.setText("PERSONAL INFO:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 171, -1, -1));
 
-        jLabel5.setText("Name:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 221, -1, -1));
-
         jLabel7.setText("mobile no.:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 247, -1, -1));
 
@@ -116,13 +111,6 @@ public class Signup extends javax.swing.JFrame {
 
         jLabel10.setText("e-mail ID:");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 340, -1, -1));
-
-        nametext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nametextActionPerformed(evt);
-            }
-        });
-        getContentPane().add(nametext, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 218, 80, -1));
         getContentPane().add(mobtext, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 244, 81, -1));
         getContentPane().add(emailtext, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 337, 67, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 196, 231, 11));
@@ -147,7 +135,7 @@ public class Signup extends javax.swing.JFrame {
         String enteredUsername = jTextField1.getText().trim();
         String enteredPassword1 = jPasswordField1.getText().trim();
         String enteredPassword2 = jPasswordField2.getText().trim();
-        String name1 = nametext.getText().trim();
+        
         String mob1 = mobtext.getText().trim();
         String reg1= regtext.getText().trim();
         int role1 =  roletext.getSelectedIndex();
@@ -177,7 +165,7 @@ public class Signup extends javax.swing.JFrame {
                 
                 
             }
-        if(name1.isEmpty() || mob1.isEmpty() || reg1.isEmpty() || email1.isEmpty() )
+        if(mob1.isEmpty() || reg1.isEmpty() || email1.isEmpty() )
         {
             JOptionPane.showMessageDialog(Signup.this, "enter personal details properly!");
         }
@@ -198,7 +186,7 @@ public class Signup extends javax.swing.JFrame {
         
         String sql= ("insert into user values(?,?,?,?,?,?)"); //name,email,password,mobile,registratiuon date, role
         PreparedStatement pss = objj.con.prepareStatement(sql);
-        pss.setString(1, nametext.getText());
+        pss.setString(1, jTextField1.getText());
         pss.setString(2, emailtext.getText());
         pss.setString(3, jPasswordField1.getText());
         pss.setString(4, mobtext.getText());
@@ -229,10 +217,6 @@ public class Signup extends javax.swing.JFrame {
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
-
-    private void nametextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nametextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nametextActionPerformed
 
     private void regtextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regtextMouseClicked
         // TODO add your handling code here:
@@ -282,7 +266,6 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -292,7 +275,6 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField mobtext;
-    private javax.swing.JTextField nametext;
     private javax.swing.JTextField regtext;
     private javax.swing.JComboBox roletext;
     // End of variables declaration//GEN-END:variables

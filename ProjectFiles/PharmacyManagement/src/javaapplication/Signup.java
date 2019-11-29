@@ -1,6 +1,7 @@
 package javaapplication;
 
 
+import java.sql.PreparedStatement;
 import javaapplication.login;
 import javax.swing.JOptionPane;
 
@@ -185,6 +186,32 @@ public class Signup extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(Signup.this, "please select any role!");
 
+        }
+        
+        
+          try
+
+        {
+            
+        dbconnect objj = new dbconnect();
+        objj.createConnection();
+        
+        String sql= ("insert into user values(?,?,?,?,?,?)"); //name,email,password,mobile,registratiuon date, role
+        PreparedStatement pss = objj.con.prepareStatement(sql);
+        pss.setString(1, nametext.getText());
+        pss.setString(2, emailtext.getText());
+        pss.setString(3, jPasswordField1.getText());
+        pss.setString(4, mobtext.getText());
+        pss.setString(5, regtext.getText());
+        pss.setInt(6, roletext.getSelectedIndex());
+     
+        pss.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Insertion Successful!");
+        objj.closeConnection();
+        
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
         }
             
                     

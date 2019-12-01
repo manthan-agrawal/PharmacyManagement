@@ -46,7 +46,7 @@ public class home extends javax.swing.JFrame {
     }
     
     void tableInsert(String searchName){
-        String sql = "";
+        String sql;
         dbconnect obj;
         obj = new dbconnect();
         obj.createConnection();

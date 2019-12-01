@@ -3,6 +3,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -54,7 +56,7 @@ public class bill extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Medicine Name", "Quantity", "Price", "Amount"
+                "Medicine Name", "Price", "Quantity", "Amount"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -97,6 +99,11 @@ public class bill extends javax.swing.JFrame {
         jLabel5.setText("Modify");
 
         jTextField1.setText("Quantity");
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -104,6 +111,11 @@ public class bill extends javax.swing.JFrame {
         });
 
         jButton1.setText("Apply");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,7 +311,52 @@ public class bill extends javax.swing.JFrame {
     }//GEN-LAST:event_btnbackActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+     
+
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row;
+        String billNumberCheck;
+        row = tbldata.getSelectedRow();
+        String med_name = tbldata.getModel().getValueAt(row, 0).toString();
+
+        dbconnect obj;
+        obj = new dbconnect();
+        obj.createConnection();
+                     
+        try{
+            String sql="";
+            if(jTextField1.getText().equals("0")){
+                sql = "delete from user_has_medicine where `Bill_bill no.`= ? and medicine_name = ?;";
+            PreparedStatement pstmt  = obj.con.prepareStatement(sql);
+            pstmt.setString(1, bill_number);
+            pstmt.setString(2, med_name);      
+            pstmt.executeUpdate();                
+            }
+            else{
+            sql= ("update user_has_medicine set quantitiy =(?)" +
+                "where `Bill_bill no.`= (?) and medicine_name = (?);");
+            PreparedStatement pstmt  = obj.con.prepareStatement(sql);
+            pstmt.setInt(1, Integer.parseInt(jTextField1.getText()));   
+            pstmt.setString(2, bill_number);
+            pstmt.setString(3, med_name);      
+            pstmt.executeUpdate();}
+            createTable("");
+            jTextField1.setText("Quantity");    
+            
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,e);
+        }        
+        obj.closeConnection();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
+        // TODO add your handling code here:
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1MouseClicked
 
 
     public static void main(String args[]) {

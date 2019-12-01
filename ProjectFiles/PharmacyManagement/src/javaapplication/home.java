@@ -365,7 +365,7 @@ public class home extends javax.swing.JFrame {
             pstmt.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Insertion Successful");
-            txtQunatity.setText("");            
+            txtQunatity.setText("Quantity");            
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(null,e);

@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Timestamp;
+import java.util.Date;
 
 
 public class home extends javax.swing.JFrame {
@@ -315,7 +317,7 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_AddCompanyActionPerformed
 
     private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
-        // TODO add your handling code here:
+
         int row;
         String billNumberCheck;
         row = tbldata.getSelectedRow();
@@ -340,12 +342,16 @@ public class home extends javax.swing.JFrame {
             
             
             if(!billNumberCheck.equals(bill_no)){
-                String sql1= ("insert into bill values (?, ?, ?, ?)");
+                String sql1= ("insert into bill values (?, ?, ?, ?, ?)");
                 PreparedStatement pstmt1  = obj.con.prepareStatement(sql1);
                 pstmt1.setString(1, bill_no);
                 pstmt1.setInt(2, 0);
                 pstmt1.setInt(3, 0);
-                pstmt1.setInt(4, 0);          
+                pstmt1.setInt(4, 0);  
+                Date date= new Date();
+                long time = date.getTime();
+                Timestamp ts = new Timestamp(time);
+                pstmt1.setString(5,String.valueOf(ts));
                 pstmt1.executeUpdate();
             }       
             

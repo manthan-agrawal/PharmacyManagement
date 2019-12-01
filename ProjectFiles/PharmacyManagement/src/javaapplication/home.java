@@ -51,9 +51,9 @@ public class home extends javax.swing.JFrame {
         obj = new dbconnect();
         obj.createConnection();
         if(searchName.isEmpty())
-            sql= "SELECT * FROM medicine LIMIT 15;";
+            sql= "SELECT * FROM medicine LIMIT 20;";
         else{ 
-            sql= ("SELECT * FROM medicine where name = '"+searchName+"' LIMIT 15;");
+            sql= ("SELECT * FROM medicine where name LIKE '"+searchName+"%' LIMIT 20;");
         }
         Statement ps;
         try {
@@ -136,6 +136,11 @@ public class home extends javax.swing.JFrame {
         });
 
         txtsearch.setText("Enter medicine name");
+        txtsearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtsearchMouseClicked(evt);
+            }
+        });
         txtsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtsearchActionPerformed(evt);
@@ -350,6 +355,11 @@ public class home extends javax.swing.JFrame {
         
         txtQunatity.setText("");
     }//GEN-LAST:event_txtQunatityMouseClicked
+
+    private void txtsearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtsearchMouseClicked
+        // TODO add your handling code here:
+        txtsearch.setText("");
+    }//GEN-LAST:event_txtsearchMouseClicked
 
     public static void main(String args[]) {
         

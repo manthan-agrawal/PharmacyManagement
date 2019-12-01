@@ -160,7 +160,7 @@ public class login extends javax.swing.JFrame {
             String password = rs.getString("password");     
             int role  = rs.getInt("role");
             if(username.equals(enteredUsername) && password.equals(enteredPassword) && role==loginAs){
-                home home = new home(username);
+                home home = new home(username,"-1");
                 home.tableInsert("");
                 home.setVisible(true);
                 setVisible(false);

@@ -14,29 +14,31 @@ public class home extends javax.swing.JFrame {
     String bill_no;
     DefaultTableModel model;
     
-    public home(String username) {
+    public home(String username, String bill_number  ) {
         initComponents(); 
         model = (DefaultTableModel) tbldata.getModel();
         user =username;
+        bill_no = bill_number;
         
-        dbconnect obj;
-        obj = new dbconnect();
-        obj.createConnection();
-        String sql= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
-        Statement ps;
-        try {
-            ps = obj.con.createStatement();
-            ResultSet rs= ps.executeQuery(sql);            
-            rs.next();
-            bill_no = rs.getString("MAX(`bill no.`)");
-            bill_no = String.valueOf(Integer.parseInt(bill_no)+1);
-            rs.close();
-            ps.close();                
-        }catch (SQLException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        if(bill_no.equals("-1")){
+            dbconnect obj;
+            obj = new dbconnect();
+            obj.createConnection();
+            String sql= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
+            Statement ps;
+            try {
+                ps = obj.con.createStatement();
+                ResultSet rs= ps.executeQuery(sql);            
+                rs.next();
+                bill_no = rs.getString("MAX(`bill no.`)");
+                bill_no = String.valueOf(Integer.parseInt(bill_no)+1);
+                rs.close();
+                ps.close();                
+            }catch (SQLException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            obj.closeConnection();
         }
-        obj.closeConnection();
-        
     }
 
     private home() {
@@ -269,7 +271,7 @@ public class home extends javax.swing.JFrame {
         bill bill = new bill(bill_no,user);
         bill.createTable("");
         bill.setVisible(true);
-       dispose();
+        dispose();
        
     }//GEN-LAST:event_btnGenerateBillActionPerformed
 

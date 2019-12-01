@@ -1,16 +1,18 @@
 Manthan notes-
-Save button of bill.
+prssing X should delete elements of the cart
 
-Add search with beginning
-Database editing
-Expired medicine
-Billing
-Daily stock report
+
+Nihar notes--
+Report banani hai
 CART banai hai
 
-Pratik notes--
+
+Pratik-
 Medicine band kar rahe toh sab band ho jara
 Exception 
 drop down 
 interface nice
+Daily stock report
 
+Meet-
+Trigger implementation anywhere in program.

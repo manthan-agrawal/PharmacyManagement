@@ -14,40 +14,46 @@ public class home extends javax.swing.JFrame {
     String bill_no;
     DefaultTableModel model;
     
-    public home(String username) {
+    public home(String username, String bill_number  ) {
         initComponents(); 
         model = (DefaultTableModel) tbldata.getModel();
         user =username;
+        bill_no = bill_number;
         
-        dbconnect obj;
-        obj = new dbconnect();
-        obj.createConnection();
-        String sql= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
-        Statement ps;
-        try {
-            ps = obj.con.createStatement();
-            ResultSet rs= ps.executeQuery(sql);            
-            rs.next();
-            bill_no = rs.getString("MAX(`bill no.`)");
-            bill_no = String.valueOf(Integer.parseInt(bill_no)+1);
-            rs.close();
-            ps.close();                
-        }catch (SQLException ex) {
-            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+        if(bill_no.equals("-1")){
+            dbconnect obj;
+            obj = new dbconnect();
+            obj.createConnection();
+            String sql= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
+            Statement ps;
+            try {
+                ps = obj.con.createStatement();
+                ResultSet rs= ps.executeQuery(sql);            
+                rs.next();
+                bill_no = rs.getString("MAX(`bill no.`)");
+                bill_no = String.valueOf(Integer.parseInt(bill_no)+1);
+                rs.close();
+                ps.close();                
+            }catch (SQLException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            obj.closeConnection();
         }
-        obj.closeConnection();
-        
+    }
+
+    private home() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     void tableInsert(String searchName){
-        String sql = "";
+        String sql;
         dbconnect obj;
         obj = new dbconnect();
         obj.createConnection();
         if(searchName.isEmpty())
-            sql= "SELECT * FROM medicine LIMIT 15;";
+            sql= "SELECT * FROM medicine LIMIT 20;";
         else{ 
-            sql= ("SELECT * FROM medicine where name = '"+searchName+"' LIMIT 15;");
+            sql= ("SELECT * FROM medicine where name LIKE '"+searchName+"%' LIMIT 20;");
         }
         Statement ps;
         try {
@@ -107,9 +113,16 @@ public class home extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tbldata.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -123,6 +136,11 @@ public class home extends javax.swing.JFrame {
         });
 
         txtsearch.setText("Enter medicine name");
+        txtsearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtsearchMouseClicked(evt);
+            }
+        });
         txtsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtsearchActionPerformed(evt);
@@ -255,9 +273,11 @@ public class home extends javax.swing.JFrame {
 
     private void btnGenerateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateBillActionPerformed
         // TODO add your handling code here:
-        bill bill = new bill(bill_no);
+        bill bill = new bill(bill_no,user);
         bill.createTable("");
         bill.setVisible(true);
+        dispose();
+       
     }//GEN-LAST:event_btnGenerateBillActionPerformed
 
     private void AddDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddDoctorActionPerformed
@@ -274,14 +294,15 @@ public class home extends javax.swing.JFrame {
 
     private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
         // TODO add your handling code here:
-        int row;String billNumberCheck;
+        int row;
+        String billNumberCheck;
         row = tbldata.getSelectedRow();
         String med_name = tbldata.getModel().getValueAt(row, 0).toString();
 
         dbconnect obj;
         obj = new dbconnect();
         obj.createConnection();
-        
+                     
         try{
             
             String sql2= ("SELECT MAX(`bill no.`) FROM mydb.bill;");
@@ -304,7 +325,6 @@ public class home extends javax.swing.JFrame {
                 pstmt1.setInt(3, 0);
                 pstmt1.setInt(4, 0);          
                 pstmt1.executeUpdate();
-                System.out.println("hellllllll");
             }       
             
             
@@ -335,6 +355,11 @@ public class home extends javax.swing.JFrame {
         
         txtQunatity.setText("");
     }//GEN-LAST:event_txtQunatityMouseClicked
+
+    private void txtsearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtsearchMouseClicked
+        // TODO add your handling code here:
+        txtsearch.setText("");
+    }//GEN-LAST:event_txtsearchMouseClicked
 
     public static void main(String args[]) {
         

@@ -1,2 +1,2 @@
 # Pharmacy Management
- Pharmacy mangement software for ubuntu operating system using tkinter toolkit based on python.
+ Pharmacy mangement software for windows operating system using Java swing.
